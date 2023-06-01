@@ -31,22 +31,26 @@ class TaskList{
         if(description === ""){
             return;
         }
-        e.preventDefault();
+
+        e.preventDefault(); 
+        
         const task = new Task(description);
         this.addTask(task);
     }
 
     addTask(task){
         this.tasks.push(task);
-        storage.setItems(this.tasks);
         this.taskToTable(task);
+        
+        storage.setItems(this.tasks);
     }
 
     removeTask(e){
         const taskId = e.target.getAttribute("data-task-id");
         e.target.parentElement.parentElement.remove();
+        
      
-        const result = this.tasks.filter( (value, key) => {
+        this.tasks.forEach( (key, value) => {
             if(value.id == taskId){
                 this.tasks.splice(key, 1);
             }
@@ -57,7 +61,7 @@ class TaskList{
 
     editTask(e){
         const taskId = e.target.getAttribute("data-task-id");
-        e.target.parentElement.parentElement.remove();
+        // e.target.parentElement.parentElement.remove();
     }
 
     taskToTable(task){
@@ -70,9 +74,9 @@ class TaskList{
         <td>  ${result} </td>
         <td> ${task.description} </td>
         <td>
-        <button type="button" data-task-id="${task.id}" class="btn btn-success btn-sm up-arrow"><i class="fa-solid fa-check"></i></button>
-        <button type="button" data-task-id="${task.id}" class="btn btn-info btn-sm down-arrow"><i class="fa-solid fa-pen-to-square"></i></button>
-        <button type="button" data-task-id="${task.id}" class="btn btn-danger btn-sm delete"><i class="fa-sharp fa-solid fa-xmark"></i></button>
+        <button type="button" data-task-id="${task.id}" class="btn btn-success btn-sm done">✔️</button>
+        <button type="button" data-task-id="${task.id}" class="btn btn-info btn-sm edit">✎</button>
+        <button type="button" data-task-id="${task.id}" class="btn btn-danger btn-sm delete">𐌗</button>
         </td>
         `;
 
