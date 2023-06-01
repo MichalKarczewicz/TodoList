@@ -58,7 +58,7 @@ class TaskList{
         e.target.parentElement.parentElement.remove();
         
      
-        this.tasks.forEach( (key, value) => {
+        this.tasks.forEach( (value, key) => {
             if(value.id == taskId){
                 this.tasks.splice(key, 1);
             }
@@ -96,8 +96,16 @@ class TaskList{
                 arr[i].description = information;
             }
         }
-
         storage.setItems(this.tasks);
+        this.deleteAllRows();
+        this.loadDataFromStorage();
+    }
+
+    deleteAllRows(){
+        const tbody = document.querySelectorAll("#taskTable tbody tr");
+        tbody.forEach( item => {
+            item.remove();
+        })
     }
 
     taskToTable(task){
