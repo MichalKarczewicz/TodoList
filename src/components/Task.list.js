@@ -23,7 +23,7 @@ class TaskList{
     
     initModal = () => {
         this.modalWindow = new bootstrap.Modal(document.getElementById("modalWindow"));
-        document.getElementById("closeModal").addEventListener('click', this.clear());
+        document.getElementById("closeModal").addEventListener('click', () =>  this.modalWindow.toggle());
     }
 
     loadDataFromStorage() {
@@ -68,15 +68,36 @@ class TaskList{
     }
 
     editTask(e){
-        const taskId = e.target.parentElement.parentElement;
-        const tdElements = taskId.querySelectorAll('td');
+        const task = e.target.parentElement.parentElement;
+        const taskId = e.target.getAttribute("data-task-id");
+        const tdElements = task.querySelectorAll('td');
         const tdElement = tdElements[1];
-
-        const modalInput = document.querySelector("#modalResults");
+        let modalInput = document.querySelector("#modalResults");
         let information = tdElement.textContent;
-        
         modalInput.value = information;
+        
+        let saveButton = document.querySelector("#saveModal");
+        saveButton.addEventListener("click", () => {
+            const value = document.querySelector("#modalResults").value;
+            this.saveBtn(taskId, value);
+          });
+
         this.modalWindow.toggle();
+    }
+
+    saveBtn(taskId, information){
+        let arr = this.tasks;
+        console.log(taskId, information);
+
+        for(let i=0;i< arr.length;i++){
+            let el = arr[i];
+            if(el.id == taskId){
+                console.log(arr[i].description);
+                arr[i].description = information;
+            }
+        }
+
+        storage.setItems(this.tasks);
     }
 
     taskToTable(task){
