@@ -72,10 +72,10 @@ class TaskList{
         const tdElements = taskId.querySelectorAll('td');
         const tdElement = tdElements[1];
 
-        const modalParagraph = document.querySelector("#modalResults");
+        const modalInput = document.querySelector("#modalResults");
         let information = tdElement.textContent;
         
-        modalParagraph.innerHTML = information;
+        modalInput.value = information;
         this.modalWindow.toggle();
     }
 
