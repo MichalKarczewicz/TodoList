@@ -1,5 +1,5 @@
 import { storage } from "./Storage.js"
-import { Task } from './Task';
+import { Task } from './Task.js';
 
 window.onload = function() {
     console.log("App started");
