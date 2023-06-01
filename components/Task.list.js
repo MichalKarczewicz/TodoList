@@ -10,6 +10,7 @@ window.onload = function() {
 class TaskList{
     constructor(){
         this.tasks = [];
+        this.numberOfTask = 0;
     }
 
     init(){
@@ -31,7 +32,7 @@ class TaskList{
             return;
         }
         e.preventDefault();
-        const task = new Task(this.tasks.length, description);
+        const task = new Task(description);
         this.addTask(task);
     }
 
@@ -56,15 +57,17 @@ class TaskList{
 
     editTask(e){
         const taskId = e.target.getAttribute("data-task-id");
-        // e.target.parentElement.parentElement.remove();
+        e.target.parentElement.parentElement.remove();
     }
 
     taskToTable(task){
         const tbody = document.querySelector("#taskTable tbody");
         const tr = document.createElement("tr");
-        
+        const numberOfItems = task;
+        const result = numberOfItems.id !== task.id ? this.numberOfTask  : this.numberOfTask++;
+
         tr.innerHTML = `
-        <td> ${task.id} </td>
+        <td>  ${result} </td>
         <td> ${task.description} </td>
         <td>
         <button type="button" data-task-id="${task.id}" class="btn btn-success btn-sm up-arrow"><i class="fa-solid fa-check"></i></button>

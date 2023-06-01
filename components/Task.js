@@ -1,6 +1,6 @@
 export class Task{
-    constructor(id, description){
+    constructor(description){
         this.description = description;
-        this.id = id;
+        this.id = Date.now();
     }
 }
