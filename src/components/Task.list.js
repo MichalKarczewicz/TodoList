@@ -84,6 +84,16 @@ class TaskList{
 
         this.modalWindow.toggle();
     }
+    
+    doneTask(e){
+        const task = e.target.parentElement.parentElement;
+        const taskId = e.target.getAttribute("data-task-id");
+        const tdElements = task.querySelectorAll('td');
+        const tdDescription = tdElements[1];
+        const tdNumber = tdElements[0];
+        tdDescription.classList.toggle("taskDone");
+        tdNumber.classList.toggle("taskDone");
+    }
 
     saveBtn(taskId, information){
         let arr = this.tasks;
@@ -133,6 +143,8 @@ class TaskList{
         let editButton = document.querySelector(`button.edit[data-task-id='${task.id}']`);
         editButton.addEventListener("click", (e) => this.editTask(e));
         
+        let doneButton = document.querySelector(`button.done[data-task-id='${task.id}']`);
+        doneButton.addEventListener("click", (e) => this.doneTask(e));
 
 
     }
