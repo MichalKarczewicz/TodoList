@@ -13,9 +13,17 @@ class TaskList{
         this.numberOfTask = 0;
     }
 
+    modalWindow = null;
+
     init(){
         document.querySelector("#addBtn").addEventListener("click", e => this.addBtn(e));
         this.loadDataFromStorage();
+        this.initModal();
+    }
+    
+    initModal = () => {
+        this.modalWindow = new bootstrap.Modal(document.getElementById("modalWindow"));
+        document.getElementById("closeModal").addEventListener('click', this.clear());
     }
 
     loadDataFromStorage() {
@@ -60,8 +68,15 @@ class TaskList{
     }
 
     editTask(e){
-        const taskId = e.target.getAttribute("data-task-id");
-        // e.target.parentElement.parentElement.remove();
+        const taskId = e.target.parentElement.parentElement;
+        const tdElements = taskId.querySelectorAll('td');
+        const tdElement = tdElements[1];
+
+        const modalParagraph = document.querySelector("#modalResults");
+        let information = tdElement.textContent;
+        
+        modalParagraph.innerHTML = information;
+        this.modalWindow.toggle();
     }
 
     taskToTable(task){
@@ -87,7 +102,7 @@ class TaskList{
         deleteButton.addEventListener("click", (e) => this.removeTask(e));
 
         let editButton = document.querySelector(`button.edit[data-task-id='${task.id}']`);
-        deleteButton.addEventListener("click", (e) => this.editTask(e));
+        editButton.addEventListener("click", (e) => this.editTask(e));
         
 
 
